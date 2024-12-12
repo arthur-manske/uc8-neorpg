@@ -1,0 +1,48 @@
+plugins {
+	id 'application'
+	id 'java'
+}
+
+repositories {
+	mavenCentral()
+}
+
+/* Importante: Configuração dos diretórios do JAVA */
+sourceSets {
+	main {
+		java {
+			/* Todos os subdiretórios devem estar presentes */
+			srcDirs = [
+				'src/main/java/com/manske/neorpg/utils',
+				'src/main/java/com/manske/neorpg/entity',
+				'src/main/java/com/manske/neorpg/entity/character',
+				'src/main/java/com/manske/neorpg/entity/character/attack',
+				'src/main/java/com/manske/neorpg/entity/character/nonplayable',
+				'src/main/java/com/manske/neorpg/entity/item',
+				'src/main/java/com/manske/neorpg/world/',
+				'src/main/java/com/manske/neorpg/world/battle',
+				'src/main/java/com/manske/neorpg'
+			]
+		}
+	}
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+tasks.withType(JavaCompile) {
+	options.incremental = true
+	options.forkOptions.memoryInitialSize = "512m"
+	options.forkOptions.memoryMaximumSize = "2g"
+}
+
+tasks.withType(Test) {
+	maxParallelForks = 4
+}
+
+application {
+	mainClass = 'com.manske.neorpg.App'
+}
